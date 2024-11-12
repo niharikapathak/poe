@@ -1,0 +1,56 @@
+pipeline {
+    agent any  // Use any available agent (e.g., any node/worker in Jenkins)
+
+    environment {
+        // Optional environment variables
+        MY_VAR = 'some-value'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout the repository code
+                git branch: 'main', url: 'https://github.com/your-user/your-repository.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Example build step (e.g., Maven, Gradle, npm, etc.)
+                echo 'Building the project...'
+                // Replace with your build command, e.g., `mvn clean install` for Maven projects
+            }
+        }
+
+        stage('Test') {
+            steps {
+                // Example test step
+                echo 'Running tests...'
+                // Replace with your test command, e.g., `mvn test` for Maven or `npm test` for Node.js
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Example deployment step (you can deploy to any platform like AWS, Kubernetes, etc.)
+                echo 'Deploying the project...'
+                // Replace with your deploy command
+            }
+        }
+    }
+
+    post {
+        always {
+            // Cleanup actions, if needed
+            echo 'Cleaning up...'
+        }
+        success {
+            // Actions to take on success (e.g., notify via email or Slack)
+            echo 'Build succeeded!'
+        }
+        failure {
+            // Actions to take on failure (e.g., notify via email or Slack)
+            echo 'Build failed!'
+        }
+    }
+}
